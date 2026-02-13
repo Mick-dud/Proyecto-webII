@@ -1,0 +1,106 @@
+<section class="bg-[#FAF8F1] min-h-auto py-16 px-6">
+    <div class="container mx-auto max-w-6xl">
+
+        <div class="text-center mb-12">
+            <span
+                class="inline-block py-1 px-3 rounded-full border border-[#d2bd8b]/30 text-[#d2bd8b] text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                Nuestra Red
+            </span>
+            <h1 class="text-4xl lg:text-5xl font-serif font-bold text-[#5b4f47] mb-4">
+                Encuentra tu Sede Más Cercana
+            </h1>
+            <p class="text-[#8c7e70] max-w-2xl mx-auto">
+                Revisa la disponibilidad en tiempo real de nuestros consultorios para una atención más rápida.
+            </p>
+        </div>
+
+        <div class="max-w-xl mx-auto mb-16 relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-[#d2bd8b] group-focus-within:text-[#5b4f47] transition-colors" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input [(ngModel)]="filtroNombre" type="text" placeholder="Buscar por nombre o ciudad (Ej: Quitumbe)..."
+                class="block w-full pl-12 pr-4 py-4 bg-white border-2 border-[#d2bd8b]/20 rounded-full text-[#5b4f47] placeholder-[#dfd3c3] focus:border-[#d2bd8b] focus:ring-0 focus:outline-none shadow-lg shadow-[#d2bd8b]/5 transition-all">
+        </div>
+
+        <div class="mb-8" *ngIf="filtroNombre">
+            <p class="text-[#8c7e70] text-sm font-medium">
+                Resultados para: <span class="text-[#5b4f47] font-bold">"{{ filtroNombre }}"</span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            @for (sede of sedesFiltradas; track sede.nombre) {
+
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-xl shadow-[#5b4f47]/5 border border-[#d2bd8b]/20 hover:shadow-2xl hover:border-[#d2bd8b] hover:-translate-y-1 transition-all duration-300 group">
+
+                <div class="h-48 overflow-hidden relative">
+                    <img [src]="sede.imagen" [alt]="sede.nombre"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#5b4f47] uppercase tracking-wide shadow-sm">
+                        {{ sede.ciudad }}
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-serif font-bold text-[#5b4f47]">{{ sede.nombre }}</h3>
+                    </div>
+
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-sm text-[#8c7e70]">Concurrencia actual:</span>
+                        <span class="px-2 py-1 rounded-md text-xs font-bold uppercase" [ngClass]="{
+                                    'bg-red-100 text-red-700': sede.concurrencia === 'alta',
+                                    'bg-yellow-100 text-yellow-700': sede.concurrencia === 'media',
+                                    'bg-green-100 text-green-700': sede.concurrencia === 'baja'
+                                }">
+                            {{ sede.concurrencia }}
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-[#5b4f47]">Ocupación</span>
+                            <span class="text-[#d2bd8b]">{{ sede.capacidad }}%</span>
+                        </div>
+                        <div class="w-full bg-[#FAF8F1] rounded-full h-2 overflow-hidden border border-[#d2bd8b]/20">
+                            <div class="h-full rounded-full transition-all duration-1000 ease-out"
+                                [style.width.%]="sede.capacidad" [ngClass]="{
+                                        'bg-red-500': sede.concurrencia === 'alta',
+                                        'bg-yellow-500': sede.concurrencia === 'media',
+                                        'bg-green-500': sede.concurrencia === 'baja'
+                                    }">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full mt-4 py-3 rounded-xl border border-[#d2bd8b] text-[#5b4f47] font-bold text-sm hover:bg-[#d2bd8b] hover:text-white transition-colors duration-300">
+                        Ver Horarios Disponibles
+                    </button>
+
+                </div>
+            </div>
+
+            } @empty {
+            <div class="col-span-full text-center py-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#FAF8F1] mb-4">
+                    <svg class="w-8 h-8 text-[#d2bd8b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <p class="text-[#5b4f47] font-bold text-lg">No encontramos sedes con ese nombre.</p>
+                <p class="text-[#8c7e70]">Intenta buscar por ciudad, ej: "Ambato"</p>
+            </div>
+            }
+
+        </div>
+    </div>
+</section>

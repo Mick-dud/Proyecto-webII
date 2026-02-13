@@ -2,51 +2,48 @@
     <div class="container mx-auto px-6">
 
         <div class="text-center mb-12">
-            <span
-                class="inline-block py-1 px-3 rounded-full bg-[#d2bd8b]/20 text-[#5b4f47] text-xs font-bold tracking-widest uppercase mb-4">
-                Transformaciones
+            <span class="inline-block py-1 px-3 rounded-full bg-[#d2bd8b]/20 text-[#5b4f47] text-xs font-bold tracking-widest uppercase mb-4">
+                {{ tituloSeccion }}
             </span>
+
             <h2 class="text-4xl lg:text-5xl font-serif font-bold text-[#5b4f47] mb-4">
-                Resultados que Hablan
+                {{ tituloPrincipal }}
             </h2>
+
             <p class="text-[#8c7e70] max-w-2xl mx-auto text-lg">
-                Desliza para ver la magia de la odontología estética moderna.
+                {{ descripcion }}
                 <span class="hidden md:inline">Arrastra el círculo central.</span>
             </p>
         </div>
 
-        <div
-            class="relative w-full max-w-4xl mx-auto aspect-[4/3] md:aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl shadow-[#5b4f47]/20 border-4 border-white">
+        <div class="relative w-full max-w-4xl mx-auto aspect-[4/3] md:aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl shadow-[#5b4f47]/20 border-4 border-white group">
 
-            <img src="/img/dientes_sin_otodoncia.png"
-                alt="Antes del tratamiento" class="absolute inset-0 w-full h-full object-cover">
+            <img [src]="imagenDespues" alt="Después del tratamiento"
+                class="absolute inset-0 w-full h-full object-cover">
 
-            <span
-                class="absolute top-4 left-4 bg-white/80 backdrop-blur text-[#5b4f47] px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm z-10">
-                Antes
+            <span class="absolute top-4 right-4 bg-[#d2bd8b] text-white px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm z-0">
+                Después
             </span>
 
-            <div class="absolute inset-0 w-full h-full"
+            <div class="absolute inset-0 w-full h-full z-10"
                 [style.clip-path]="'inset(0 ' + (100 - sliderPosition) + '% 0 0)'">
 
-                <img src="/img/dientes_blancos.jpg"
-                    alt="Después del tratamiento" class="absolute inset-0 w-full h-full object-cover">
+                <img [src]="imagenAntes" alt="Antes del tratamiento"
+                    class="absolute inset-0 w-full h-full object-cover">
 
-                <span
-                    class="absolute top-4 right-4 bg-[#d2bd8b] text-white px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm z-10">
-                    Después
+                <span class="absolute top-4 left-4 bg-white/80 backdrop-blur text-[#5b4f47] px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
+                    Antes
                 </span>
+
+                <div class="absolute inset-y-0 right-0 w-1 bg-white/50 h-full"></div>
             </div>
 
-            <div class="absolute inset-y-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+            <div class="absolute inset-y-0 -ml-[2px] w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_15px_rgba(0,0,0,0.5)]"
                 [style.left.%]="sliderPosition">
 
-                <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-[#d2bd8b] text-[#d2bd8b]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7h8M8 17h8M7 12h10m-8-4l-4 4 4 4m6-8l4 4-4 4" />
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-[#d2bd8b] text-[#d2bd8b] transition-transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8M8 17h8M7 12h10m-8-4l-4 4 4 4m6-8l4 4-4 4" />
                     </svg>
                 </div>
             </div>
@@ -57,16 +54,18 @@
 
         </div>
 
+        @if (mostrarBoton) {
         <div class="text-center mt-12">
-            <a href="#"
+            <a [href]="urlBoton"
                 class="inline-flex items-center text-[#5b4f47] font-bold border-b-2 border-[#d2bd8b] hover:text-[#d2bd8b] transition-colors pb-1">
-                Ver galería completa de casos
+                {{ textoBoton }}
                 <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
             </a>
         </div>
+        }
 
     </div>
 </section>

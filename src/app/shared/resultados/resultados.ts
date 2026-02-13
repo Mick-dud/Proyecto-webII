@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,12 +9,24 @@ import { CommonModule } from '@angular/common';
   styleUrl: './resultados.css'
 })
 export class Resultados {
-  // Valor inicial del slider al 50%
+  
+  // Inputs existentes...
+  @Input() tituloSeccion: string = 'Transformaciones';
+  @Input() tituloPrincipal: string = 'Resultados que Hablan';
+  @Input() descripcion: string = 'Desliza para ver la magia de la odontología estética moderna.';
+  @Input() imagenAntes: string = '/img/dientes_sin_otodoncia.png';
+  @Input() imagenDespues: string = '/img/dientes_blancos.jpg';
+  
+  // --- NUEVOS INPUTS PARA EL BOTÓN ---
+  @Input() textoBoton: string = 'Ver galería completa de casos'; // Texto por defecto
+  @Input() urlBoton: string = '#';                               // Enlace por defecto
+  @Input() mostrarBoton: boolean = true;                         // Opción para ocultarlo
+  
+  // Lógica del slider...
   sliderPosition: number = 50;
 
-  // Función para actualizar la posición cuando el usuario arrastra
   updateSlider(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.sliderPosition = Number(input.value);
+    const inputElement = event.target as HTMLInputElement;
+    this.sliderPosition = Number(inputElement.value);
   }
 }

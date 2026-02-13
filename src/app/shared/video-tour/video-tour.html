@@ -1,0 +1,34 @@
+<section class="bg-[#FAF8F1] py-20 relative overflow-hidden">
+    
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d2bd8b]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+
+        <div class="text-center mb-12 max-w-3xl mx-auto">
+            <span class="inline-block py-1 px-3 rounded-full border border-[#d2bd8b]/30 text-[#d2bd8b] text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                {{ subtitulo }}
+            </span>
+            <h2 class="text-3xl lg:text-4xl font-serif font-bold text-[#5b4f47] mb-4">
+                {{ titulo }}
+            </h2>
+            <p class="text-[#8c7e70] text-lg font-light">
+                {{ descripcion }}
+            </p>
+        </div>
+
+        <div class="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-[#5b4f47]/20 border-4 border-white">
+            <div class="aspect-video w-full">
+                <iframe 
+                    class="w-full h-full object-cover"
+                    [src]="videoSeguro" 
+                    title="Video Tour" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+    </div>
+</section>
