@@ -5,10 +5,8 @@ interface Especialista {
   nombre: string;
   cargo: string;
   descripcion: string;
-  imagen: string;
-  
+  imagen: string;  
 }
-
 @Component({
   selector: 'app-equipo',
   standalone: true,
@@ -16,8 +14,7 @@ interface Especialista {
   templateUrl: './equipo.html',
   styles: []
 })
-export class Equipo {
-  
+export class Equipo {  
   especialistas: Especialista[] = [
     {
       nombre: 'Dr. Alejandro Vega',

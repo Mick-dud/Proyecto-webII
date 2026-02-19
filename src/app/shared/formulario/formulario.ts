@@ -1,26 +1,26 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Paciente, PacienteService } from '../service/paciente.service';
-// ⚠️ IMPORTANTE: Esta ruta busca en shared/services
+import { Paciente, PacienteService } from '../../sercices/paciente.service';
+// Importamos la interfaz y el servicio que ya creaste
 
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './formulario.html',
-  styleUrl: './formulario.css',
+  styleUrls: ['./formulario.css']
 })
-export class Pacientes implements OnInit {
-  
-  private servicio = inject(PacienteService);
-  
-  listaPacientes = signal<Paciente[]>([]);
-  
-  editando = false;
-  idEdicion: string | null = null;
+export class Formulario implements OnInit {
+  private pacienteService = inject(PacienteService);
 
+  // Signal para mantener la tabla actualizada en tiempo real
+  listaPacientes = signal<Paciente[]>([]);
+
+  editando = false;
+
+  // Objeto inicial para el formulario
   nuevoPaciente: Paciente = {
     nombre: '',
     email: '',
@@ -29,49 +29,51 @@ export class Pacientes implements OnInit {
   };
 
   ngOnInit() {
-    this.cargarPacientes();
+    this.obtenerPacientes();
   }
 
-  cargarPacientes() {
-    this.servicio.getPacientes().subscribe({
-      next: (datos) => {
-        this.listaPacientes.set(datos);
-      },
-      error: (e) => console.error('Error:', e)
+  // Leer (Read)
+  obtenerPacientes() {
+    this.pacienteService.getPacientes().subscribe(pacientes => {
+      this.listaPacientes.set(pacientes);
     });
   }
 
+  // Crear o Actualizar (Create / Update)
   guardar() {
-    if (this.editando && this.idEdicion) {
-      this.servicio.actualizarPaciente(this.idEdicion, this.nuevoPaciente).subscribe(() => {
-        this.cargarPacientes();
+    if (this.editando && this.nuevoPaciente.id) {
+      this.pacienteService.actualizarPaciente(this.nuevoPaciente.id, this.nuevoPaciente).subscribe(() => {
+        this.obtenerPacientes();
         this.cancelarEdicion();
+        alert('Expediente actualizado correctamente.');
       });
     } else {
-      this.servicio.crearPaciente(this.nuevoPaciente).subscribe(() => {
-        this.cargarPacientes();
+      this.pacienteService.crearPaciente(this.nuevoPaciente).subscribe(() => {
+        this.obtenerPacientes();
         this.cancelarEdicion();
+        alert('Paciente registrado con éxito.');
       });
     }
   }
 
-  eliminar(id: string) {
-    if (confirm('¿Borrar registro?')) {
-      this.servicio.eliminarPaciente(id).subscribe(() => {
-        this.cargarPacientes();
-      });
-    }
-  }
-
+  // Cargar datos al formulario para editar
   editar(paciente: Paciente) {
     this.editando = true;
-    this.idEdicion = paciente.id!;
     this.nuevoPaciente = { ...paciente };
   }
 
+  // Eliminar (Delete)
+  eliminar(id: string) {
+    if (confirm('¿Estás seguro de eliminar este expediente? Esta acción no se puede deshacer.')) {
+      this.pacienteService.eliminarPaciente(id).subscribe(() => {
+        this.obtenerPacientes();
+      });
+    }
+  }
+
+  // Limpiar el formulario
   cancelarEdicion() {
     this.editando = false;
-    this.idEdicion = null;
     this.nuevoPaciente = { nombre: '', email: '', telefono: '', tratamiento: '' };
   }
 }

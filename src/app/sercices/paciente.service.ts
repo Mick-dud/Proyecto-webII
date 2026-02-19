@@ -10,16 +10,13 @@ export interface Paciente {
     telefono: string;
     tratamiento: string;
 }
-
 @Injectable({
     providedIn: 'root'
 })
 export class PacienteService {
-
     private http = inject(HttpClient);
-    // TU ENLACE DE FIREBASE EXACTO (No olvides el slash al final)
+    
     private API_URL = 'https://actividad-autonoma-2522b-default-rtdb.firebaseio.com/';
-
     getPacientes(): Observable<Paciente[]> {
         return this.http.get<{ [key: string]: Paciente }>(`${this.API_URL}/pacientes.json`)
             .pipe(
@@ -35,15 +32,12 @@ export class PacienteService {
                 })
             );
     }
-
     crearPaciente(paciente: Paciente) {
         return this.http.post(`${this.API_URL}/pacientes.json`, paciente);
     }
-
     actualizarPaciente(id: string, paciente: Paciente) {
         return this.http.put(`${this.API_URL}/pacientes/${id}.json`, paciente);
     }
-
     eliminarPaciente(id: string) {
         return this.http.delete(`${this.API_URL}/pacientes/${id}.json`);
     }

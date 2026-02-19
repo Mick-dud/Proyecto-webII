@@ -1,0 +1,132 @@
+<section class="bg-[#FAF8F1] min-h-screen py-12 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="h-24 w-full"></div>
+
+        <div class="text-center mb-10">
+            <span
+                class="inline-block py-1 px-3 rounded-full bg-[#d2bd8b]/20 text-[#5b4f47] text-xs font-bold tracking-widest uppercase mb-4">
+                Administración
+            </span>
+            <h1 class="text-3xl lg:text-4xl font-serif font-bold text-[#5b4f47] mb-2">
+                Gestión de Personal
+            </h1>
+            <div class="w-24 h-1 bg-[#d2bd8b] mx-auto rounded-full"></div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl shadow-xl shadow-[#5b4f47]/5 border border-[#d2bd8b]/30 mb-12">
+            <h2 class="text-xl font-bold text-[#5b4f47] mb-6 flex items-center gap-2">
+                <span class="text-[#d2bd8b] text-2xl">{{ editando ? '✏️' : '👤' }}</span>
+                {{ editando ? 'Editar Especialista' : 'Nuevo Registro' }}
+            </h2>
+
+            <form (ngSubmit)="guardarUsuario()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Nombre Completo</label>
+                    <input [(ngModel)]="nuevoUsuario.name" name="name" type="text" placeholder="Ej: Dr. Juan Pérez"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/40 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Correo (Email)</label>
+                    <input [(ngModel)]="nuevoUsuario.email" name="email" type="email" placeholder="correo@omegadent.com"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/40 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Teléfono</label>
+                    <input [(ngModel)]="nuevoUsuario.phone" name="phone" type="text" placeholder="099..." required
+                        class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/40 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Contraseña</label>
+                    <input [(ngModel)]="nuevoUsuario.password" name="password" type="password" placeholder="••••••••"
+                        required
+                        class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/40 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Rol en el Sistema</label>
+                    <select [(ngModel)]="nuevoUsuario.rol" name="rol" required
+                        class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/40 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all cursor-pointer">
+                        <option value="EMPLEADO">Empleado / Asistente</option>
+                        <option value="ADMIN">Administrador / Odontólogo</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end mb-1 space-x-3">
+                    @if(editando){
+                    <button type="button" (click)="resetear()"
+                        class="w-1/3 px-4 py-3 rounded-xl border-2 border-[#5b4f47] text-[#5b4f47] font-bold hover:bg-[#5b4f47] hover:text-white transition-all">
+                        X
+                    </button>
+                    }
+                    <button type="submit"
+                        class="w-full px-8 py-3 rounded-xl bg-[#5b4f47] text-white font-bold hover:bg-[#d2bd8b] hover:text-[#5b4f47] shadow-lg hover:-translate-y-1 transition-all">
+                        {{ editando ? 'Actualizar' : 'Guardar' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl shadow-[#5b4f47]/5 border border-[#d2bd8b]/30 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-[#5b4f47] text-[#FAF8F1]">
+                        <tr>
+                            <th class="p-5 font-bold uppercase text-xs tracking-wider">Usuario</th>
+                            <th class="p-5 font-bold uppercase text-xs tracking-wider">Contacto</th>
+                            <th class="p-5 font-bold uppercase text-xs tracking-wider text-center">Rol</th>
+                            <th class="p-5 font-bold uppercase text-xs tracking-wider text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#d2bd8b]/20">
+                        @for (usuario of listaUsuarios(); track usuario.id) {
+                        <tr class="hover:bg-[#FAF8F1]/50 transition-colors">
+                            <td class="p-5">
+                                <div class="font-bold text-[#5b4f47]">{{ usuario.name }}</div>
+                                <div class="text-xs text-[#d2bd8b] font-mono mt-1">ID: {{ usuario.id | slice:0:6 }}...
+                                </div>
+                            </td>
+                            <td class="p-5 text-sm text-[#8c7e70]">
+                                <div class="mb-1">📧 {{ usuario.email }}</div>
+                                <div>📱 {{ usuario.phone }}</div>
+                            </td>
+                            <td class="p-5 text-center">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase border"
+                                    [class]="usuario.rol === 'ADMIN' ? 'bg-[#5b4f47]/10 text-[#5b4f47] border-[#5b4f47]/20' : 'bg-[#d2bd8b]/10 text-[#d2bd8b] border-[#d2bd8b]/20'">
+                                    {{ usuario.rol }}
+                                </span>
+                            </td>
+                            <td class="p-5 text-right space-x-2">
+                                @if (authService.rolActual() === 'ADMIN') {
+                                <button (click)="seleccionarParaEditar(usuario)"
+                                    class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-colors border border-blue-100"
+                                    title="Editar">✏️</button>
+                                <button (click)="eliminarUsuario(usuario.id!)"
+                                    class="w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-500 hover:text-white transition-colors border border-red-100"
+                                    title="Eliminar">🗑️</button>
+                                } @else {
+                                <span class="text-xs font-bold text-[#8c7e70]/50 italic uppercase">🔒 Sin
+                                    permisos</span>
+                                }
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr>
+                            <td colspan="4" class="p-10 text-center text-[#8c7e70]">
+                                <div class="text-4xl mb-2">👥</div>
+                                No hay usuarios registrados o la lista está cargando...
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>

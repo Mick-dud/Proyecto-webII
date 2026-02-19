@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { Pacientes } from "../../shared/formulario/formulario";
+import { Formulario } from '../../shared/formulario/formulario'; 
 
 @Component({
   selector: 'app-expedientes',
-  imports: [Pacientes],
+  imports: [Formulario], 
   templateUrl: './expedientes.html',
   styleUrl: './expedientes.css',
 })
-export class Expedientes {
-
-}
+export class Expedientes { }
