@@ -1,43 +1,30 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Para el pipe slice
-
-import { Usuario } from '../../models/usuario';
+import { CommonModule } from '@angular/common';
+import { Usuario } from '../../models/usuario'; 
 import { UsuarioService } from '../../sercices/usuario.service';
 import { AuthService } from '../../sercices/auth.service';
-import { UsuariosGestion } from "../../shared/usuarios-gestion/usuarios-gestion";
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-usuarios-gestion',
   standalone: true,
-  imports: [FormsModule, CommonModule, UsuariosGestion],
-  templateUrl: './usuarios.html',
-  styleUrl: './usuarios.css' // Si tienes uno
+  imports: [FormsModule, CommonModule],
+  templateUrl: './usuarios-gestion.html',
+  styleUrl: './usuarios-gestion.css'
 })
-export class Usuarios implements OnInit {
+export class UsuariosGestion implements OnInit { 
   private usuarioService = inject(UsuarioService);
-  public authService = inject(AuthService); // Público para usarlo en el HTML
+  public authService = inject(AuthService);
 
-  // Lista reactiva para la tabla
   listaUsuarios = signal<Usuario[]>([]);
   editando = false;
 
-  nuevoUsuario: Usuario = {
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    rol: 'EMPLEADO' // Rol por defecto
-  };
+  nuevoUsuario: Usuario = { name: '', email: '', phone: '', password: '', rol: 'EMPLEADO' };
 
-  ngOnInit() {
-    this.obtenerUsuarios();
-  }
+  ngOnInit() { this.obtenerUsuarios(); }
 
   obtenerUsuarios() {
-    this.usuarioService.getUsuarios().subscribe(usuarios => {
-      this.listaUsuarios.set(usuarios);
-    });
+    this.usuarioService.getUsuarios().subscribe(usuarios => this.listaUsuarios.set(usuarios));
   }
 
   guardarUsuario() {
@@ -58,9 +45,7 @@ export class Usuarios implements OnInit {
 
   eliminarUsuario(id: string) {
     if (confirm('¿Deseas eliminar este usuario del sistema?')) {
-      this.usuarioService.deleteUsuario(id).subscribe(() => {
-        this.obtenerUsuarios();
-      });
+      this.usuarioService.deleteUsuario(id).subscribe(() => this.obtenerUsuarios());
     }
   }
 
