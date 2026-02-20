@@ -18,17 +18,16 @@ export const routes: Routes = [
     { path: '', component: Home },
     { path: 'acerca', component: Acerca },
     { path: 'consultas', component: Consultas },
-
-    // 1. Protegido por authGuard (Cualquiera que haya iniciado sesión)
-    { path: 'expedientes', component: Expedientes, canActivate: [authGuard] },
+    
+    { path: 'expedientes', component: Expedientes, canActivate: [authGuard] }, // 2do CanActivate
 
     { path: 'contacto', component: Contacto },
     { path: 'error-page', component: ErrorPage },
-    { path: 'login', component: Login, canActivate: [guestGuard]},
-    { path: 'registro', component: Registro, canActivate: [guestGuard] },
+    { path: 'login', component: Login, canActivate: [guestGuard]}, // 1er CanActivate
+    { path: 'registro', component: Registro, canActivate: [guestGuard] }, 
 
-    // 2. Protegido fuertemente (Oculto si no eres ADMIN y bloqueado si intentas forzarlo)
-    { path: 'usuarios', component: Usuarios, canMatch: [usuariosMatchGuard], // Cumple CanMatch
-        canActivate: [adminGuard] // Cumple tu 2do CanActivate
+    // (Oculto si no eres ADMIN y bloqueado si intentas forzarlo)
+    { path: 'usuarios', component: Usuarios, canMatch: [usuariosMatchGuard], // CanMatch
+        canActivate: [adminGuard] // 3do CanActivate
     }
 ];
