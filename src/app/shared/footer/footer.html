@@ -3,15 +3,14 @@
 
         <div class="flex flex-col items-center text-center">
 
-            <a href="#" class="group flex items-center gap-3 transition-transform duration-300 hover:scale-105 mb-6">
+            <a routerLink="/" class="group flex items-center gap-3 transition-transform duration-300 hover:scale-105 mb-6">
                 <img class="h-15 w-auto" src="/img/logo_Omegadent.png" alt="Omegadent Logo">
-                
-                </a>
+            </a>
 
             <div class="flex flex-wrap justify-center gap-2 mt-2">
                 @for (enlace of enlaces; track $index) {
-                <a routerLink="{{enlace.link}}"
-                    class="px-5 py-2 text-l font-medium text-[#5b4f47] rounded-full transition-all duration-300 hover:bg-[#d2bd8b] hover:text-white hover:shadow-lg hover:shadow-[#d2bd8b]/30"
+                <a [routerLink]="enlace.link"
+                    class="px-5 py-2 text-sm font-bold tracking-wider uppercase text-[#5b4f47] rounded-full transition-all duration-300 hover:bg-[#d2bd8b] hover:text-white hover:shadow-lg hover:shadow-[#d2bd8b]/30"
                     aria-label="{{enlace.texto}}">
                     {{enlace.texto}}
                 </a>
