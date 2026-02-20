@@ -18,6 +18,6 @@ export class Footer {
     { texto: 'Consultas', link: '/consultas' },
     { texto: 'Expedientes', link: '/expedientes' },
     { texto: 'Contacto', link: '/contacto' },
-    { texto: 'Acceso Privado', link: '/login' }
+    { texto: 'Login', link: '/login' }
   ];
 }
