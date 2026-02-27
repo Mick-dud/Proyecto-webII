@@ -16,10 +16,11 @@
             </h2>
 
             <form (ngSubmit)="guardar()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
+
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Nombre Completo</label>
-                    <input [(ngModel)]="nuevoPaciente.nombre" name="nombre" type="text" placeholder="Ej: María López" required
+                    <input [(ngModel)]="nuevoPaciente.nombre" name="nombre" type="text" placeholder="Ej: María López"
+                        required
                         class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] focus:border-transparent outline-none transition-all">
                 </div>
 
@@ -28,7 +29,7 @@
                     <div class="relative">
                         <select [(ngModel)]="nuevoPaciente.tratamiento" name="tratamiento" required
                             class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
-                            <option value="" disabled selected >Selecciona una opción...</option>
+                            <option value="" disabled selected>Selecciona una opción...</option>
                             <option value="Consulta General">Consulta General</option>
                             <option value="Limpieza Dental">Limpieza Dental</option>
                             <option value="Ortodoncia">Ortodoncia</option>
@@ -36,17 +37,22 @@
                             <option value="Diseño de Sonrisa">Diseño de Sonrisa</option>
                             <option value="Implantes">Implantes</option>
                             <option value="Endodoncia">Endodoncia</option>
-                            
+
                         </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-[#d2bd8b]">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                        <div
+                            class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-[#d2bd8b]">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                <path
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Email</label>
-                    <input [(ngModel)]="nuevoPaciente.email" name="email" type="email" placeholder="correo@ejemplo.com" required
+                    <input [(ngModel)]="nuevoPaciente.email" name="email" type="email" placeholder="correo@ejemplo.com"
+                        required
                         class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] focus:border-transparent outline-none transition-all">
                 </div>
 
@@ -58,10 +64,10 @@
 
                 <div class="md:col-span-2 lg:col-span-4 flex gap-3 justify-end mt-4">
                     @if(editando) {
-                        <button type="button" (click)="cancelarEdicion()" 
-                            class="px-6 py-3 rounded-full border-2 border-[#5b4f47] text-[#5b4f47] font-bold hover:bg-[#5b4f47] hover:text-white transition-colors">
-                            Cancelar
-                        </button>
+                    <button type="button" (click)="cancelarEdicion()"
+                        class="px-6 py-3 rounded-full border-2 border-[#5b4f47] text-[#5b4f47] font-bold hover:bg-[#5b4f47] hover:text-white transition-colors">
+                        Cancelar
+                    </button>
                     }
                     <button type="submit"
                         class="px-8 py-3 rounded-full bg-[#d2bd8b] text-white font-bold hover:bg-[#c2ad7b] shadow-lg hover:shadow-[#d2bd8b]/40 transition-all transform hover:-translate-y-1">
@@ -86,14 +92,26 @@
                     <tbody class="divide-y divide-[#d2bd8b]/20">
                         @for (paciente of listaPacientes(); track paciente.id) {
                         <tr class="hover:bg-[#FAF8F1]/50 transition-colors group">
-                            
+
                             <td class="p-5">
-                                <div class="font-bold text-[#5b4f47]">{{ paciente.nombre }}</div>
-                                <div class="text-xs text-[#d2bd8b] font-mono mt-1">ID: {{ paciente.id | slice:0:5 }}...</div>
+                                <div style="display: flex; align-items: center; gap: 15px;">
+
+                                    <img [src]="'https://api.dicebear.com/9.x/lorelei/svg?seed=' + paciente.nombre"
+                                        alt="Avatar de paciente"
+                                        style="width: 45px; height: 45px; border-radius: 50%; background-color: #fce7f3; padding: 5px;">
+
+                                    <div>
+                                        <div class="font-bold text-[#5b4f47]">{{ paciente.nombre }}</div>
+                                        <div class="text-xs text-[#d2bd8b] font-mono mt-1">ID: {{ paciente.id |
+                                            slice:0:5 }}...</div>
+                                    </div>
+
+                                </div>
                             </td>
-                            
+
                             <td class="p-5">
-                                <span class="px-3 py-1 rounded-full bg-[#d2bd8b]/10 text-[#5b4f47] text-xs font-bold uppercase border border-[#d2bd8b]/20">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-[#d2bd8b]/10 text-[#5b4f47] text-xs font-bold uppercase border border-[#d2bd8b]/20">
                                     {{ paciente.tratamiento || 'General' }}
                                 </span>
                             </td>
@@ -108,12 +126,12 @@
                             </td>
 
                             <td class="p-5 text-right space-x-2">
-                                <button (click)="editar(paciente)" 
+                                <button (click)="editar(paciente)"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white transition-colors border border-blue-100"
                                     title="Editar">
                                     ✏️
                                 </button>
-                                <button (click)="eliminar(paciente.id!)" 
+                                <button (click)="eliminar(paciente.id!)"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-500 hover:text-white transition-colors border border-red-100"
                                     title="Eliminar">
                                     🗑️

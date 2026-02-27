@@ -22,10 +22,13 @@ export class Formulario implements OnInit {
 
   // Objeto inicial para el formulario
   nuevoPaciente: Paciente = {
+    id: '',
     nombre: '',
     email: '',
     telefono: '',
-    tratamiento: ''
+    tratamiento: '',
+    edad: 0,
+    saldoPendiente: 0
   };
 
   ngOnInit() {
@@ -42,12 +45,24 @@ export class Formulario implements OnInit {
   // Crear o Actualizar (Create / Update)
   guardar() {
     if (this.editando && this.nuevoPaciente.id) {
-      this.pacienteService.actualizarPaciente(this.nuevoPaciente.id, this.nuevoPaciente).subscribe(() => {
+      // CAMBIO: Usamos putPaciente y enviamos SOLO this.nuevoPaciente
+      this.pacienteService.actualizarPaciente(this.nuevoPaciente).subscribe(() => {
         this.obtenerPacientes();
         this.cancelarEdicion();
         alert('Expediente actualizado correctamente.');
       });
     } else {
+      //Autoincrementable
+      let proximoId = 1;
+      const pacientesActuales = this.listaPacientes();
+      if(pacientesActuales.length > 0){
+        const ids= pacientesActuales.map (p =>Number(p.id));
+        const maxId = Math.max(...ids);
+        proximoId = maxId + 1;
+      }
+      this.nuevoPaciente.id = Date.now().toString();
+      
+      //Guardamos el JSON Server
       this.pacienteService.crearPaciente(this.nuevoPaciente).subscribe(() => {
         this.obtenerPacientes();
         this.cancelarEdicion();
@@ -74,6 +89,6 @@ export class Formulario implements OnInit {
   // Limpiar el formulario
   cancelarEdicion() {
     this.editando = false;
-    this.nuevoPaciente = { nombre: '', email: '', telefono: '', tratamiento: '' };
+    this.nuevoPaciente = {id: '', nombre: '', email: '', telefono: '', tratamiento: '', edad: 0, saldoPendiente: 0 };
   }
 }

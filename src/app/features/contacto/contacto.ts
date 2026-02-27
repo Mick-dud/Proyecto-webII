@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { Contact } from "../../shared/contact/contact";
+
+import { Contacto } from '../../shared/contact/contact'; 
 
 @Component({
-  selector: 'app-contacto',
-  imports: [Contact],
+  selector: 'app-contacto-page', 
+  standalone: true,
+  imports: [Contacto],  
   templateUrl: './contacto.html',
-  styleUrl: './contacto.css',
+  styleUrls: ['./contacto.css']
 })
-export class Contacto {
-
+export class Contact {
 }

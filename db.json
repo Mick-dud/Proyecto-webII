@@ -1,0 +1,75 @@
+{
+  "pacientes": [
+    {
+      "id": "1",
+      "nombre": "Juan Pérez",
+      "edad": 30,
+      "telefono": "0991234567",
+      "email": "juan@gmail.com",
+      "tratamiento": "Ortodoncia",
+      "saldoPendiente": 150
+    },
+    {
+      "id": "2",
+      "nombre": "Maria Lopez",
+      "edad": 25,
+      "telefono": "0987654321",
+      "email": "maria@hotmail.com",
+      "tratamiento": "Limpieza General",
+      "saldoPendiente": 0
+    },
+    {
+      "id": "3",
+      "nombre": "Patricio Castillo",
+      "email": "patricio@gmail.com",
+      "telefono": "0936255847",
+      "tratamiento": "Consulta General",
+      "edad": 0,
+      "saldoPendiente": 0
+    },
+    {
+      "id": "",
+      "nombre": "Ibai LLanos",
+      "email": "ibai@gamil.com",
+      "telefono": "0936251447",
+      "tratamiento": "Endodoncia",
+      "edad": 0,
+      "saldoPendiente": 0
+    }
+  ],
+  "citas": [
+    {
+      "id": "100",
+      "pacienteId": "1",
+      "fecha": "2026-02-28",
+      "hora": "10:00",
+      "doctor": "Dr. Michael Arévalo",
+      "motivo": "Ajuste de Brackets"
+    },
+    {
+      "id": "1772153491263",
+      "nombre": "Pedro Valdez",
+      "fecha": "2026-02-28",
+      "hora": "10:00",
+      "motivo": "Consulta General"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "name": "Michael Arévalo",
+      "email": "mba.arevalosabando@gmail.com",
+      "phone": "0991234567",
+      "password": "123456",
+      "rol": "ADMIN"
+    },
+    {
+      "id": "1772143862179",
+      "name": "Daniela Castro",
+      "email": "daniela@gmail.com",
+      "phone": "0925584736",
+      "password": "01234567",
+      "rol": "EMPLEADO"
+    }
+  ]
+}

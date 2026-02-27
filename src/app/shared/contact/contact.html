@@ -53,7 +53,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-[#d2bd8b] text-m uppercase tracking-wider mb-1">Dirección
-                                </h4>                                
+                                </h4>
                                 <p class="text-[#FAF8F1]/80 leading-relaxed text-m">
                                     Turubamba bajo Oe2N y S26D,<br>
                                     entrando por Tnte. Ortíz y, Moromoro.<br>
@@ -178,6 +178,92 @@
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3746.1196910928124!2d-78.54544711336447!3d-0.2790746757511032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d599dc245c1ad5%3A0x82a1fdac68a2fee9!2sConsultorio%20odontol%C3%B3gico%20Quito%20sur%20-%20OMEGADENT!5e0!3m2!1ses-419!2sec!4v1770949912918!5m2!1ses-419!2sec"
                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="max-w-6xl mx-auto mt-20 mb-20 px-4">
+
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold text-[#5b4f47] mb-2 tracking-tight">Reserva tu Cita
+                </h2>
+                <div class="w-32 h-1.5 bg-[#d2bd8b] mx-auto rounded-full"></div>
+                <p class="mt-5 text-lg text-[#8c7e70] max-w-2xl mx-auto">Elige la fecha y hora que mejor te convenga.
+                    ¡En Omegadent te estamos esperando!</p>
+            </div>
+
+            <div
+                class="max-w-4xl mx-auto mb-16 bg-white p-8 rounded-3xl shadow-xl shadow-[#5b4f47]/10 border border-[#d2bd8b]/30">
+                <form (ngSubmit)="agendarCita()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Tu Nombre Completo</label>
+                        <input [(ngModel)]="nuevaCita.nombre" name="nombre" type="text" placeholder="Ej: Juan Pérez"
+                            required
+                            class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Motivo de Consulta</label>
+                        <select [(ngModel)]="nuevaCita.motivo" name="motivo" required
+                            class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all cursor-pointer">
+                            <option value="" disabled selected>Selecciona un motivo...</option>
+                            <option value="Consulta General">Consulta General</option>
+                            <option value="Limpieza Dental">Limpieza Dental</option>
+                            <option value="Ortodoncia">Ortodoncia</option>
+                            <option value="Blanqueamiento">Blanqueamiento</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Fecha</label>
+                        <input [(ngModel)]="nuevaCita.fecha" name="fecha" type="date" required
+                            class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all cursor-pointer">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-[#8c7e70] uppercase pl-1">Hora</label>
+                        <input [(ngModel)]="nuevaCita.hora" name="hora" type="time" required
+                            class="w-full px-4 py-3 rounded-xl bg-[#FAF8F1] border border-[#d2bd8b]/30 text-[#5b4f47] focus:ring-2 focus:ring-[#d2bd8b] outline-none transition-all cursor-pointer">
+                    </div>
+
+                    <div class="md:col-span-2 flex justify-center mt-4">
+                        <button type="submit"
+                            class="px-10 py-4 rounded-full bg-[#d2bd8b] text-white font-bold hover:bg-[#c2ad7b] shadow-lg hover:shadow-[#d2bd8b]/40 transition-all transform hover:-translate-y-1">
+                            Agendar Mi Cita
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#5b4f47] mb-6 text-center">Horarios Ocupados</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @for (cita of listaCitas(); track cita.id) {
+                <div
+                    class="bg-white p-6 rounded-3xl shadow-lg border border-[#d2bd8b]/20 hover:shadow-xl transition-all relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-5">
+                        <img [src]="'https://api.dicebear.com/7.x/initials/svg?seed=' + cita.nombre"
+                            alt="Avatar Paciente"
+                            class="w-12 h-12 rounded-full border-2 border-[#d2bd8b]/30 p-0.5 bg-[#FAF8F1]">
+                        <div>
+                            <h3 class="text-lg font-bold text-[#5b4f47]">{{ cita.nombre || 'Paciente Anterior' }}</h3>
+                            <p class="text-xs font-semibold text-[#d2bd8b] uppercase">{{ cita.motivo }}</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex justify-between items-center bg-[#FAF8F1] p-3 rounded-xl border border-[#d2bd8b]/20">
+                        <span class="text-[#8c7e70] font-bold">📅 {{ cita.fecha }}</span>
+                        <span class="bg-[#d2bd8b] text-white px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                            ⏰ {{ cita.hora }}
+                        </span>
+                    </div>
+                </div>
+                } @empty {
+                <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-[#d2bd8b]/20">
+                    <p class="text-lg text-[#8c7e70]">Sé el primero en agendar una cita.</p>
+                </div>
+                }
+            </div>
         </div>
 
     </div>

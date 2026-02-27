@@ -1,42 +1,45 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { UsuarioService } from './usuario.service';
-import { map, Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+// CAMBIO 1: Importamos 'map' de rxjs
+import { Observable, map } from 'rxjs';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class AuthService {
-    private usuarioService = inject(UsuarioService);
+    private http = inject(HttpClient);
+    private API_URL = 'http://localhost:3000/usuarios';
 
-    // Mantienen el estado reactivo de la sesión en toda la app 
-    sesionIniciada = signal<boolean>(localStorage.getItem('sesion') === 'true');
-    rolActual = signal<string | null>(localStorage.getItem('rol'));
-    
-    login(email: string, password: string): Observable<boolean> {
-        return this.usuarioService.getUsuarios().pipe(
-            map(usuarios => {
-                const usuarioCoincide = usuarios.find(u => u.email === email && u.password === password);
-
-                if (usuarioCoincide) {
-                    localStorage.setItem('sesion', 'true');
-                    localStorage.setItem('user', JSON.stringify(usuarioCoincide));
-                    localStorage.setItem('rol', usuarioCoincide.rol);
-
-                    this.rolActual.set(usuarioCoincide.rol);
-                    this.sesionIniciada.set(true);
-                    return true;
-                }
-                return false;
-            })
+    // CAMBIO 2: Login a prueba de balas
+    login(email: string, password: string): Observable<Usuario[]> {
+        // 1. Le pedimos a JSON Server TODOS los usuarios sin filtros raros
+        return this.http.get<Usuario[]>(this.API_URL).pipe(
+            // 2. Angular filtra manualmente el usuario exacto usando JavaScript
+            map(usuarios => usuarios.filter(u => u.email === email && u.password === password))
         );
     }
-    
-    logout() {
-        localStorage.removeItem('sesion');
-        localStorage.removeItem('user');
-        localStorage.removeItem('rol');
 
-        this.sesionIniciada.set(false);
-        this.rolActual.set(null);
+    // --- EL RESTO QUEDA EXACTAMENTE IGUAL ---
+
+    guardarSesion(usuario: Usuario) {
+        localStorage.setItem('usuarioSesion', JSON.stringify(usuario));
+    }
+
+    sesionIniciada(): boolean {
+        return !!localStorage.getItem('usuarioSesion');
+    }
+
+    rolActual(): string | null {
+        const session = localStorage.getItem('usuarioSesion');
+        if (session) {
+            const user: Usuario = JSON.parse(session);
+            return user.rol;
+        }
+        return null;
+    }
+
+    logout() {
+        localStorage.removeItem('usuarioSesion');
     }
 }
